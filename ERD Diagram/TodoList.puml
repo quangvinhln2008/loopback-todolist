@@ -1,0 +1,45 @@
+@startuml TodoList
+   entity User {
+      * id: integer <<PK>>
+      --
+      * userName : string
+      * password : string
+      * role : enum ('admin', 'user')
+   }
+
+   entity Project {
+      * id: integer <<PK>>
+      --
+      * projectName : string
+      * todo : todoId <<FK>>
+   }
+
+   entity Project_User {
+      * id: integer <<PK>>
+      * projectId : integer <<FK>>
+      * userId: integer <<FK>>
+   }
+
+   entity TodoList {
+      * id : integer <<PK>>
+      --
+      * title: string
+      * color: string
+      * projectId : int <<FK>>
+   }
+
+   entity Todo {
+      * id : integer <<PK>>
+      --
+      * title : string
+      * description : string
+      * isComplete : boolean
+      * TodoListId : int <FK>
+   }
+
+   Project ||--|{ TodoList
+   Todo }|--|| TodoList
+   Project }|--|| Project_User
+   User }|--|| Project_User
+
+@enduml
