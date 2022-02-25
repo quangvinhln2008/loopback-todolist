@@ -7,11 +7,19 @@
       * role : enum ('admin', 'user')
    }
 
+   entity SocialLogin {
+      * id : integer <<PK>>
+      --
+      * socialType: string
+      * userId: integer <<FK>>
+      * userName: string
+      * password: string
+   }
+
    entity Project {
       * id: integer <<PK>>
       --
       * projectName : string
-      * todo : todoId <<FK>>
    }
 
    entity Project_User {
@@ -20,26 +28,23 @@
       * userId: integer <<FK>>
    }
 
-   entity TodoList {
+   entity Task {
       * id : integer <<PK>>
       --
       * title: string
-      * color: string
-      * projectId : int <<FK>>
+      * description: string
+      * projectId : integer <<FK>>
+      * userId : integer <<FK>
+      * isDone: boolean
+      * isClearn:boolean
+      * linkTaskId: integer
    }
 
-   entity Todo {
-      * id : integer <<PK>>
-      --
-      * title : string
-      * description : string
-      * isComplete : boolean
-      * TodoListId : int <FK>
-   }
-
-   Project ||--|{ TodoList
-   Todo }|--|| TodoList
+   Project ||--|{ Task
    Project }|--|| Project_User
    User }|--|| Project_User
+   User }|--|| Task
+   User }|--|| SocialLogin
+   Task |o--o| Task
 
 @enduml
